@@ -323,6 +323,8 @@ uis.directive('uiSelect',
 
         };
 
+        var opened = false;
+
         scope.calculateDropdownPos = function(){
 
           if ($select.open) {
@@ -331,8 +333,11 @@ uis.directive('uiSelect',
               return;
             }
 
-            // Hide the dropdown so there is no flicker until $timeout is done executing.
-            dropdown[0].style.opacity = 0;
+           // Hide the dropdown so there is no flicker until $timeout is done executing.
+           if ($select.search === '' && !opened) {
+              dropdown[0].style.opacity = 0;
+              opened = true;
+           }
 
             // Delay positioning the dropdown until all choices have been added so its height is correct.
             $timeout(function(){
